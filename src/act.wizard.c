@@ -1829,8 +1829,10 @@ struct last_entry *find_llog_entry(int punique, long idnum) {
    * do (like searching for the last shutdown/etc..) */
   for(tmp=recs-1; tmp > 0; tmp--) {
     fseek(fp,-1*((long)sizeof(struct last_entry)),SEEK_CUR);
-    if (fread(&mlast,sizeof(struct last_entry),1,fp) != 1)
+    if (fread(&mlast,sizeof(struct last_entry),1,fp) != 1) {
+      fclose(fp);
       return NULL;
+    }
         /*another one to keep that stepback */
     fseek(fp,-1*((long)sizeof(struct last_entry)),SEEK_CUR);
 
@@ -1991,6 +1993,7 @@ void list_llog_entries(struct char_data *ch)
         last_array[llast.close_type], ctime(&llast.time));
     i = fread(&llast, sizeof(struct last_entry), 1, fp);
   }
+  fclose(fp);
 }
 
 static struct char_data *is_in_game(long idnum) {
@@ -2518,22 +2521,22 @@ ACMD(do_show)
 	return;
       }
     } else {
-      char *buf2;
+      char *buf2, *buf2_save;
       if (*value)
         builder = 1;
       for (len = zrn = 0; zrn <= top_of_zone_table; zrn++) {
         if (*value) {
-          buf2 = strtok(strdup(zone_table[zrn].builders), " ");
+          buf2_save = strdup(zone_table[zrn].builders);
+          buf2 = strtok(buf2_save, " ");
           while (buf2) {
             if (!str_cmp(buf2, value)) {
               if (builder == 1)
                 builder++;
               break;
-          }
+            }
             buf2 = strtok(NULL, " ");
           }
-          if (!buf2)
-	    continue;
+          free(buf2_save);
 	}
 	nlen = print_zone_to_buf(buf + len, sizeof(buf) - len, zrn, 0);
         if (len + nlen >= sizeof(buf))
@@ -4445,6 +4448,7 @@ ACMD(do_changelog)
   if (!(new = fopen(CHANGE_LOG_FILE, "w"))) {
     mudlog(BRF, LVL_IMPL, TRUE,
            "SYSERR: Error opening new changelog file (%s)", CHANGE_LOG_FILE);
+    fclose(fl);
     return;
   }
 

@@ -96,8 +96,10 @@ int isname(const char *str, const char *namelist)
   for(curtok = strtok(newlist, WHITESPACE); curtok; curtok = strtok(NULL, WHITESPACE))
     if(curtok && is_abbrev(str, curtok)) {
       /* Don't allow abbreviated numbers. - Sryth */
-      if (isdigit(*str) && (atoi(str) != atoi(curtok)))
+      if (isdigit(*str) && (atoi(str) != atoi(curtok))) {
+        free(newlist);
         return 0;
+      }
       free(newlist);
       return 1;
     }

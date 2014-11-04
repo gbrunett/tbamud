@@ -61,6 +61,7 @@
 
 /* room-related defines */
 /* The cardinal directions: used as index to room_data.dir_option[] */
+#define DIR_BEGIN      0
 #define NORTH          0    /**< The direction north */
 #define EAST           1    /**< The direction east */
 #define SOUTH          2    /**< The direction south */
@@ -71,6 +72,7 @@
 #define NORTHEAST      7 /**< The direction north-east */
 #define SOUTHEAST      8 /**< The direction south-east */
 #define SOUTHWEST      9 /**< The direction south-west */
+#define DIR_END        9
 /** Total number of directions available to move in. BEFORE CHANGING THIS, make
 * sure you change every other direction and movement based item that this will
 * impact. */
@@ -118,16 +120,16 @@
 #define EX_HIDDEN    (1 << 4) /**< Exit is hidden, secret */
 
 /* Sector types: used in room_data.sector_type */
-#define SECT_INSIDE          0		/**< Indoors, connected to SECT macro. */
-#define SECT_CITY            1		/**< In a city			*/
-#define SECT_FIELD           2		/**< In a field		*/
-#define SECT_FOREST          3		/**< In a forest		*/
-#define SECT_HILLS           4		/**< In the hills		*/
-#define SECT_MOUNTAIN        5		/**< On a mountain		*/
-#define SECT_WATER_SWIM      6		/**< Swimmable water		*/
-#define SECT_WATER_NOSWIM    7		/**< Water - need a boat	*/
-#define SECT_FLYING	         8		/**< Flying			*/
-#define SECT_UNDERWATER	     9		/**< Underwater		*/
+#define SECT_INSIDE          0	/**< Indoors, connected to SECT macro. */
+#define SECT_CITY            1	/**< In a city			*/
+#define SECT_FIELD           2	/**< In a field		*/
+#define SECT_FOREST          3	/**< In a forest		*/
+#define SECT_HILLS           4	/**< In the hills		*/
+#define SECT_MOUNTAIN        5	/**< On a mountain		*/
+#define SECT_WATER_SWIM      6	/**< Swimmable water		*/
+#define SECT_WATER_NOSWIM    7	/**< Water - need a boat	*/
+#define SECT_FLYING	     8	/**< Flying			*/
+#define SECT_UNDERWATER	     9	/**< Underwater		*/
 /** The total number of room Sector Types */
 #define NUM_ROOM_SECTORS  10
 
@@ -346,6 +348,7 @@
  which control the valid places you can wear a piece of equipment.
  For example, there are two neck positions on the player, and items
  only get the generic neck type. */
+#define WEAR_BEGIN      0
 #define WEAR_LIGHT      0  /**< Equipment Location Light */
 #define WEAR_FINGER_R   1  /**< Equipment Location Right Finger */
 #define WEAR_FINGER_L   2  /**< Equipment Location Left Finger */
@@ -364,6 +367,7 @@
 #define WEAR_WRIST_L   15  /**< Equipment Location Left Wrist */
 #define WEAR_WIELD     16  /**< Equipment Location Weapon */
 #define WEAR_HOLD      17  /**< Equipment Location held in offhand */
+#define WEAR_END       17
 /** Total number of available equipment lcoations */
 #define NUM_WEARS      18
 

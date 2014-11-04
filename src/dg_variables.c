@@ -291,6 +291,10 @@ void find_replacement(void *go, struct script_data *sc, trig_data *trig,
           (vd->context==0 || vd->context==sc->context))
         break;
 
+  if (field == NULL) {
+    return;
+  }
+
   if (!*field) {
     if (vd)
       snprintf(str, slen, "%s", vd->value);

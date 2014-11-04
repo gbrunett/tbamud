@@ -402,6 +402,7 @@ void copyover_recover()
   bool fOld;
   char name[MAX_INPUT_LENGTH];
   long pref;
+  char tmpBuffer[LARGE_BUFSIZE];
 
   log ("Copyover recovery initiated");
 
@@ -424,7 +425,19 @@ void copyover_recover()
 
   for (;;) {
     fOld = TRUE;
-    i = fscanf (fp, "%d %ld %s %s %s\n", &desc, &pref, name, host, guiopt);
+    
+    fgets(tmpBuffer, LARGE_BUFSIZE, fp);
+    if (feof(fp)) {
+      break;
+    } 
+
+    i = sscanf(tmpBuffer, "%d %ld %s %s %s\n",
+       &desc, &pref, name, host, guiopt);
+
+    if (i != 5) {
+      break;
+    }
+
     if (desc == -1)
       break;
 

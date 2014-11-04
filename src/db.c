@@ -982,8 +982,10 @@ void index_boot(int mode)
 
   /* Exit if 0 records, unless this is shops */
   if (!rec_count) {
-    if (mode == DB_BOOT_SHP || mode == DB_BOOT_QST)
+    if (mode == DB_BOOT_SHP || mode == DB_BOOT_QST) {
+      fclose(db_index);
       return;
+    }
     log("SYSERR: boot error - 0 records counted in %s/%s.", prefix,
 	index_filename);
     exit(1);

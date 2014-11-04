@@ -469,6 +469,11 @@ static void dam_message(int dam, struct char_data *ch, struct char_data *victim,
     }
   };
 
+  if ((w_type < TYPE_WEAPON_BEGIN) || (w_type > TYPE_WEAPON_END))
+  {
+    return;
+  }
+
   w_type -= TYPE_HIT;		/* Change to base of table with text */
 
   if (dam == 0)		msgnum = 0;

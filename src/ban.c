@@ -10,6 +10,8 @@
 
 #define __BAN_C__
 
+#include <stdio.h>
+
 #include "conf.h"
 #include "sysdep.h"
 #include "structs.h"
@@ -47,7 +49,7 @@ void load_banned(void)
   char site_name[BANNED_SITE_LENGTH + 1], ban_type[100];
   char name[MAX_NAME_LENGTH + 1];
   struct ban_list_element *next_node;
-
+  char tmpBuffer[SMALL_BUFSIZE];
   ban_list = 0;
 
   if (!(fl = fopen(BAN_FILE, "r"))) {
@@ -57,20 +59,27 @@ void load_banned(void)
       log("   Ban file '%s' doesn't exist.", BAN_FILE);
     return;
   }
-  while (fscanf(fl, " %s %s %d %s ", ban_type, site_name, &date, name) == 4) {
-    CREATE(next_node, struct ban_list_element, 1);
-    strncpy(next_node->site, site_name, BANNED_SITE_LENGTH);	/* strncpy: OK (n_n->site:BANNED_SITE_LENGTH+1) */
-    next_node->site[BANNED_SITE_LENGTH] = '\0';
-    strncpy(next_node->name, name, MAX_NAME_LENGTH);	/* strncpy: OK (n_n->name:MAX_NAME_LENGTH+1) */
-    next_node->name[MAX_NAME_LENGTH] = '\0';
-    next_node->date = date;
 
-    for (i = BAN_NOT; i <= BAN_ALL; i++)
-      if (!strcmp(ban_type, ban_types[i]))
-	next_node->type = i;
+  while (fgets(tmpBuffer, SMALL_BUFSIZE, fl)) {
+    if (feof(fl)) {
+       break;
+    }
+    if (sscanf(tmpBuffer, "%s %s %d %s", ban_type, site_name, &date, name) == 4) {
+      CREATE(next_node, struct ban_list_element, 1);
+      strncpy(next_node->site, site_name, BANNED_SITE_LENGTH);	/* strncpy: OK (n_n->site:BANNED_SITE_LENGTH+1) */
+      next_node->site[BANNED_SITE_LENGTH] = '\0';
+      strncpy(next_node->name, name, MAX_NAME_LENGTH);	/* strncpy: OK (n_n->name:MAX_NAME_LENGTH+1) */
+      next_node->name[MAX_NAME_LENGTH] = '\0';
+      next_node->date = date;
+  
+      for (i = BAN_NOT; i <= BAN_ALL; i++)
+        if (!strcmp(ban_type, ban_types[i]))
+	  next_node->type = i;
 
-    next_node->next = ban_list;
-    ban_list = next_node;
+      next_node->next = ban_list;
+      ban_list = next_node;
+    }
+    memset(tmpBuffer, (char) NULL, SMALL_BUFSIZE);
   }
 
   fclose(fl);

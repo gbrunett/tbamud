@@ -668,10 +668,14 @@ ACMD(do_alias)
 
 static void perform_complex_alias(struct txt_q *input_q, char *orig, struct alias_data *a)
 {
+  int i;
   struct txt_q temp_queue;
   char *tokens[NUM_TOKENS], *temp, *write_point;
   char buf2[MAX_RAW_INPUT_LENGTH], buf[MAX_RAW_INPUT_LENGTH];	/* raw? */
   int num_of_tokens = 0, num;
+
+  for (i = 0; i < NUM_TOKENS; i++)
+     tokens[i] = (char*) NULL;
 
   /* First, parse the original string */
   strcpy(buf2, orig);	/* strcpy: OK (orig:MAX_INPUT_LENGTH < buf2:MAX_RAW_INPUT_LENGTH) */

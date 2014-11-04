@@ -651,6 +651,7 @@ static void trigedit_create_index(int znum, char *type)
     return;
   } else if (!(newfile = fopen(new_name, "w"))) {
     mudlog(BRF, LVL_IMPL, TRUE, "SYSERR: DG_OLC: Failed to open %s", new_name);
+    fclose(oldfile);
     return;
   }
 

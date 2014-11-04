@@ -1184,8 +1184,8 @@ static int Crash_load_objs(struct char_data *ch) {
   int i, num_of_days, orig_rent_code, num_objs=0;
   unsigned long cost;
   struct obj_data *cont_row[MAX_BAG_ROWS];
-  int rentcode,timed,netcost,gold,account,nitems;
-	obj_save_data *loaded, *current;
+  int rentcode = 0,timed = 0,netcost = 0,gold = 0,account = 0,nitems = 0;
+  obj_save_data *loaded, *current;
 
   if (!get_filename(filename, sizeof(filename), CRASH_FILE, GET_NAME(ch)))
     return 1;
@@ -1208,7 +1208,7 @@ static int Crash_load_objs(struct char_data *ch) {
   if (!get_line(fl, line))
     mudlog(NRM, MAX(LVL_IMMORT, GET_INVIS_LEV(ch)), TRUE, "Failed to read player's rent code: %s.", GET_NAME(ch));
   else
-    sscanf(line,"%d %d %d %d %d %d",&rentcode, &timed, &netcost,&gold,&account,&nitems);
+    sscanf(line,"%d %d %d %d %d %d", &rentcode, &timed, &netcost, &gold, &account, &nitems);
 
   if (rentcode == RENT_RENTED || rentcode == RENT_TIMEDOUT) {
     sprintf(str, "%d", SECS_PER_REAL_DAY);

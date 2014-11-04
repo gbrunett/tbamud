@@ -252,9 +252,16 @@ static void MapArea(room_rnum room, struct char_data *ch, int x, int y, int min,
         ypos+door_offsets[door][1] <= ew_size)
     { /* Virtual exit */
 
-      map[x+door_offsets[door][0]][y+door_offsets[door][1]] = vdoor_marks[door] ;
-      if (map[x+offsets[door][0]][y+offsets[door][1]] == SECT_EMPTY )
-        MapArea(room,ch,x + offsets[door][0], y + offsets[door][1], min, max, xpos+door_offsets[door][0], ypos+door_offsets[door][1], worldmap);
+      if ((door >= 0) && (door <= 3)) { 
+         map[x+door_offsets[door][0]][y+door_offsets[door][1]] = vdoor_marks[door] ;
+      }
+
+      if (map[x+offsets[door][0]][y+offsets[door][1]] == SECT_EMPTY ) {
+        MapArea(room, ch, x + offsets[door][0], 
+                          y + offsets[door][1], min, max, 
+                          xpos + door_offsets[door][0],
+                          ypos + door_offsets[door][1], worldmap);
+      }
       continue;
     }
 

@@ -12,6 +12,7 @@
 #endif
 #include <sys/types.h>
 #include "protocol.h"
+#include <alloca.h>
 #include <malloc.h>
 
 /******************************************************************************

@@ -137,6 +137,7 @@ unsigned char *zmalloc(int len, char *file, int line)
   m = (meminfo *) calloc(1, sizeof(meminfo));
   if (!m) {
     fprintf(zfd,"zmalloc: FAILED mem alloc for zmalloc struct... bailing!\n");
+    free(ret);
     return NULL;
   }
   m->addr = ret;
@@ -146,6 +147,7 @@ unsigned char *zmalloc(int len, char *file, int line)
   if (!m->file) {
     fprintf(zfd,"zmalloc: FAILED mem alloc for zmalloc struct... bailing!\n");
     free(m);
+    free(ret);
     return NULL;
   }
   m->line = line;

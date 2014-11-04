@@ -1222,6 +1222,10 @@ static void wear_message(struct char_data *ch, struct obj_data *obj, int where)
     "You grab $p."}
   };
 
+  if ((where < WEAR_BEGIN) || (where > WEAR_END)) {
+     return;
+  }
+
   act(wear_messages[where][0], TRUE, ch, obj, 0, TO_ROOM);
   act(wear_messages[where][1], FALSE, ch, obj, 0, TO_CHAR);
 }
@@ -1262,6 +1266,10 @@ static void perform_wear(struct char_data *ch, struct obj_data *obj, int where)
     "You're already wielding a weapon.\r\n",
     "You're already holding something.\r\n"
   };
+  
+  if ((where < WEAR_BEGIN) || (where > WEAR_END)) {
+     return;
+  }
 
   /* first, make sure that the wear position is valid. */
   if (!CAN_WEAR(obj, wear_bitvectors[where])) {

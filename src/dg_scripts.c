@@ -2432,6 +2432,12 @@ static void dg_letter_value(struct script_data *sc, trig_data *trig, char *cmd)
     script_log("Trigger #%d : dg_letter number > strlen!", GET_TRIG_VNUM(trig));
     return;
   }
+  
+  if ((num-1) >= MAX_INPUT_LENGTH) {
+    script_log("Trigger #%d : dg_letter number > MAX_INPUT_LENGTH",
+      GET_TRIG_VNUM(trig));
+    return;
+  }
 
   *junk = string[num-1];
   *(junk+1) = '\0';

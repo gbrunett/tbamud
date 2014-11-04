@@ -221,6 +221,7 @@ static void House_save_control(void)
   /* write all the house control recs in one fell swoop.  Pretty nifty, eh? */
   if (fwrite(house_control, sizeof(struct house_control_rec), num_of_houses, fl) != num_of_houses) {
     perror("SYSERR: Unable to save house control file.");
+    fclose(fl);
     return;	  
   }
 
@@ -669,28 +670,32 @@ static int ascii_convert_house(struct char_data *ch, obj_vnum vnum)
 
   House_get_filename(vnum, infile, sizeof(infile));
 
-	CREATE(outfile, char, strlen(infile)+7);
-	sprintf(outfile, "%s.ascii", infile);
+  CREATE(outfile, char, strlen(infile)+7);
+  sprintf(outfile, "%s.ascii", infile);
 
   if (!(in = fopen(infile, "r+b")))	/* no file found */
   {
-  	send_to_char(ch, "...no object file found\r\n");
-  	free(outfile);
+    send_to_char(ch, "...no object file found\r\n");
+    free(outfile);
     return (0);
   }
 
   if (!(out = fopen(outfile, "w")))
   {
-  	send_to_char(ch, "...cannot open output file\r\n");
-		free(outfile);
-		fclose(in);
+    send_to_char(ch, "...cannot open output file\r\n");
+    free(outfile);
+    fclose(in);
     return (0);
   }
 
   while (!feof(in)) {
     struct obj_file_elem object;
-    if (fread(&object, sizeof(struct obj_file_elem), 1, in) != 1)
+    if (fread(&object, sizeof(struct obj_file_elem), 1, in) != 1) {
+      free(outfile);
+      fclose(in);
+      fclose(out);
       return (0);
+    }
     if (ferror(in)) {
       perror("SYSERR: Reading house file in House_load");
       send_to_char(ch, "...read error in house rent file.\r\n");
@@ -701,7 +706,7 @@ static int ascii_convert_house(struct char_data *ch, obj_vnum vnum)
     }
     if (!feof(in))
     {
-    	tmp = Obj_from_store(object, &i);
+      tmp = Obj_from_store(object, &i);
       if (!objsave_save_obj_record(tmp, out, i))
       {
 	      send_to_char(ch, "...write error in house rent file.\r\n");
@@ -714,15 +719,14 @@ static int ascii_convert_house(struct char_data *ch, obj_vnum vnum)
     }
   }
 
-	fprintf(out, "$~\n");
+  fprintf(out, "$~\n");
 
-	fclose(in);
-	fclose(out);
+  free(outfile);
+  fclose(in);
+  fclose(out);
 
-	free(outfile);
-
-	send_to_char(ch, "...%d items", j);
-	return 1;
+  send_to_char(ch, "...%d items", j);
+  return 1;
 }
 
 /* The circle 3.1 function for reading rent files. No longer used by the rent system. */

@@ -126,21 +126,23 @@
 /* NEW NPC/OBJECT SPELLS can be inserted here up to 299 */
 
 /* WEAPON ATTACK TYPES */
-#define TYPE_HIT        300
-#define TYPE_STING      301
-#define TYPE_WHIP       302
-#define TYPE_SLASH      303
-#define TYPE_BITE       304
-#define TYPE_BLUDGEON   305
-#define TYPE_CRUSH      306
-#define TYPE_POUND      307
-#define TYPE_CLAW       308
-#define TYPE_MAUL       309
-#define TYPE_THRASH     310
-#define TYPE_PIERCE     311
-#define TYPE_BLAST		  312
-#define TYPE_PUNCH		  313
-#define TYPE_STAB		    314
+#define TYPE_WEAPON_BEGIN 300
+#define TYPE_HIT          300
+#define TYPE_STING        301
+#define TYPE_WHIP         302
+#define TYPE_SLASH        303
+#define TYPE_BITE         304
+#define TYPE_BLUDGEON     305
+#define TYPE_CRUSH        306
+#define TYPE_POUND        307
+#define TYPE_CLAW         308
+#define TYPE_MAUL         309
+#define TYPE_THRASH       310
+#define TYPE_PIERCE       311
+#define TYPE_BLAST        312
+#define TYPE_PUNCH        313
+#define TYPE_STAB         314
+#define TYPE_WEAPON_END   314
 /** The total number of attack types */
 #define NUM_ATTACK_TYPES  15
 
