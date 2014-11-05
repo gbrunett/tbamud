@@ -970,3 +970,22 @@ ACMD(do_follow)
     }
   }
 }
+
+ACMD(do_refollow)
+{
+  struct char_data *leader;
+
+  if (ch->master != (char_data*)  NULL) {
+    if (AFF_FLAGGED(ch, AFF_CHARM) && (ch->master)) {
+       send_to_char(ch, "You feel compelled to follow %s.\r\n",
+         GET_NAME(ch->master));
+    } else {
+      leader = ch->master;
+      stop_follower(ch);
+      add_follower(ch, leader);
+    }
+  } else {
+    send_to_char(ch, "You are not following anyone.\r\n");
+  }
+  return;
+}

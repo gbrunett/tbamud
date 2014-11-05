@@ -158,6 +158,7 @@ ACMD(do_enter);
 ACMD(do_follow);
 ACMD(do_leave);
 ACMD(do_move);
+ACMD(do_refollow);
 ACMD(do_rest);
 ACMD(do_sit);
 ACMD(do_sleep);

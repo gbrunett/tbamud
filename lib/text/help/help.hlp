@@ -7774,6 +7774,18 @@ The following terrains may be selected (only one):
 9    UNDERWATER     Underwater requires AFF_SCUBA.          5 
 
 #31
+REFOLLOW
+
+Usage: refollow
+
+If a player is already following another player or other creature,
+this command will force that player to re-follow the same leader.
+Clearly, this command will have no impact on charmed players or
+other creatures.  Similarly, this command has no impact if the
+player is not already following someone.
+
+See also: FOLLOW
+#0
 RELEASES
  
 If you have any additions, corrections, ideas, or bug reports please stop by the

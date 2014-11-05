@@ -263,6 +263,7 @@ cpp_extern const struct command_info cmd_info[] = {
   { "recite"   , "reci"    , POS_RESTING , do_use      , 0, SCMD_RECITE },
   { "receive"  , "rece"    , POS_STANDING, do_not_here , 1, 0 },
   { "recent"   , "recent"  , POS_DEAD    , do_recent   , LVL_IMMORT, 0 },
+  { "refollow" , "refol"   , POS_RESTING , do_refollow , 0, 0 },
   { "remove"   , "rem"     , POS_RESTING , do_remove   , 0, 0 },
   { "rent"     , "rent"    , POS_STANDING, do_not_here , 1, 0 },
   { "report"   , "repo"    , POS_RESTING , do_report   , 0, 0 },
