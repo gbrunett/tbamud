@@ -2665,3 +2665,76 @@ ACMD(do_scan)
     send_to_char(ch, "You don't see anything nearby!\r\n");
   }
 } // end of do_scan
+
+ACMD(do_assess)
+{
+  int value = 0, offset = 0, itemType = -1;
+  struct obj_data *obj = (struct obj_data *) NULL;
+  char arg[MAX_INPUT_LENGTH];
+
+  static const char *weap_mesg[] = {
+    "minimal", 
+    "nominal", 
+    "serious",
+    "critical",
+    "massive"
+  };
+
+  static const char *armor_mesg[] = {
+    "very light",
+    "light",
+    "moderate",
+    "heavy",
+    "very heavy"
+  };
+
+  if (!GET_SKILL(ch, SKILL_ASSESS))
+  {
+    send_to_char(ch, "Your are unskilled in the art of assessment.\r\n");
+    return;
+  }
+
+  one_argument(argument, arg);
+
+  if (!*arg) {
+     send_to_char(ch, "Assess what?\r\n");
+     return;
+  }
+
+  obj = get_obj_in_list_vis(ch, arg, NULL, ch->carrying);
+  if (obj == NULL) {
+     send_to_char(ch, "You are not able to find that particular item.\r\n");
+     return;
+  }
+
+  itemType = GET_OBJ_TYPE(obj);
+
+  if ((itemType != ITEM_WEAPON) && (itemType != ITEM_ARMOR)) {
+    send_to_char(ch, "You lack the skill to properly assess this object.\r\n");
+    return;
+  }
+
+  offset = (100 - GET_SKILL(ch, SKILL_ASSESS)) / 10;
+  offset = rand_number(-offset, offset);
+
+  if (itemType == ITEM_WEAPON) {
+    value = ((GET_OBJ_VAL(obj, 1) + 1) * GET_OBJ_VAL(obj, 2)) / 2;
+    value += offset;
+    value = (value - 1) / 4;
+    value = MAX(0, MIN(4, value));
+    send_to_char(ch,
+      "You assess that this weapon can deal %s damage.\r\n",
+        weap_mesg[value]);
+  }
+  else if (itemType == ITEM_ARMOR) {
+    value = GET_OBJ_VAL(obj, 0);
+    value += offset;
+    value = (value - 1) / 3;
+    value = MAX(0, MIN(4, value));
+    send_to_char(ch, 
+      "You assess that this armor will provide %s protection.\r\n",
+        armor_mesg[value]);
+  }
+
+  return;
+}

@@ -948,6 +948,7 @@ void mag_assign_spells(void)
   /* Declaration of skills - this actually doesn't do anything except set it up
    * so that immortals can use these skills by default.  The min level to use
    * the skill for other classes is set up in class.c. */
+  skillo(SKILL_ASSESS, "assess");
   skillo(SKILL_BACKSTAB, "backstab");
   skillo(SKILL_BASH, "bash");
   skillo(SKILL_HIDE, "hide");

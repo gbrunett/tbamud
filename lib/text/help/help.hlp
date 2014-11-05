@@ -681,6 +681,17 @@ http://www.degraeve.com/img2txt.php
 
 See also: COLOR, AUTOMAP, TBAMAP, CARTOGRAPHY
 #31
+ASSESS
+
+Usage: assess <object>
+
+This skill will allow certain classes to evaluate the general
+effectiveness of both weapons and armor.  The overall assessment of
+objects will gradually improve as one becomes more proficient in this
+skill.  A player well versed in assessment will be able to quickly
+and easily gauge how useful specific weapons and pieces of armor can be.
+
+#0
 ASSIST
 
 Usage: assist <player>

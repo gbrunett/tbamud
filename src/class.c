@@ -1629,12 +1629,14 @@ void init_spell_levels(void)
   spell_level(SKILL_STEAL, CLASS_THIEF, 4);
   spell_level(SKILL_HIDE, CLASS_THIEF, 5);
   spell_level(SKILL_TRACK, CLASS_THIEF, 6);
+  spell_level(SKILL_ASSESS, CLASS_THIEF, 10);
 
   /* WARRIORS */
   spell_level(SKILL_KICK, CLASS_WARRIOR, 1);
   spell_level(SKILL_RESCUE, CLASS_WARRIOR, 3);
   spell_level(SKILL_TRACK, CLASS_WARRIOR, 9);
   spell_level(SKILL_BASH, CLASS_WARRIOR, 12);
+  spell_level(SKILL_ASSESS, CLASS_WARRIOR, 14);
   spell_level(SKILL_WHIRLWIND, CLASS_WARRIOR, 16);
 }
 
