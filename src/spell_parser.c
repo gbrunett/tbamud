@@ -950,6 +950,7 @@ void mag_assign_spells(void)
    * the skill for other classes is set up in class.c. */
   skillo(SKILL_BACKSTAB, "backstab");
   skillo(SKILL_BASH, "bash");
+  skillo(SKILL_DISARM, "disarm");
   skillo(SKILL_HIDE, "hide");
   skillo(SKILL_KICK, "kick");
   skillo(SKILL_PICK_LOCK, "pick lock");

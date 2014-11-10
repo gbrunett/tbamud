@@ -2463,6 +2463,23 @@ For a full history of MUDs, check out: http://en.wikipedia.org/wiki/Muds
 
 Smaug Building Institute: http://zeno.biyg.org/
 #0
+DISARM
+
+Some fighting classes only.
+
+Usage: disarm [target]
+
+This attack will attempt to disarm the target.  The success of this 
+attack is based upon how well the skill has been learned as well
+as the dexterity of the player and the target.  While the disarmed
+weapon will generally remain in the target's inventory, there is a
+chance that it will be sent flying across the room for others to
+pick up.  Note that both the player and the target must be wielding
+a weapon, and a successful disarm is only possible when wielding
+certain weapon types.
+
+See also: RESCUE, STEAL
+#0
 DISCLAIMER
 
    All areas submitted or created on The Builder Academy remain the property

@@ -519,3 +519,109 @@ ACMD(do_kick)
 
   WAIT_STATE(ch, PULSE_VIOLENCE * 3);
 }
+
+ACMD(do_disarm)
+{
+  int eq_pos, percent, prob, wtype;
+  struct char_data *vict;
+  struct obj_data *obj;
+  char tmpBuffer[SMALL_BUFSIZE];
+  char arg[MAX_INPUT_LENGTH];
+
+  if (!GET_SKILL(ch, SKILL_DISARM))
+  {
+    send_to_char(ch, "You are unskilled in the art of disarming.\r\n");
+    return;
+  }
+
+  one_argument(argument, arg);
+
+  if (!(vict = get_char_vis(ch, arg, NULL, FIND_CHAR_ROOM))) {
+    if (!FIGHTING(ch)) {
+      send_to_char(ch, "Who do you want to disarm?\r\n");
+      return;
+    } else {
+      vict = FIGHTING(ch);
+    }
+  }
+
+  if (vict == ch) {
+    send_to_char(ch,
+      "You find that you lack the skill to disarm yourself.\r\n");
+    return;
+  }
+
+  if (!GET_EQ(ch, WEAR_WIELD)) {
+     send_to_char(ch, "You must be wielding a weapon to disarm someone.\r\n");
+     return;
+  }
+
+  wtype = GET_OBJ_VAL(GET_EQ(ch, WEAR_WIELD), 3) + TYPE_HIT;
+  switch (wtype) {
+    case TYPE_HIT:
+    case TYPE_WHIP:
+    case TYPE_SLASH:
+    case TYPE_BLUDGEON:
+    case TYPE_POUND:
+      break;
+
+    default:
+      send_to_char(ch,
+        "You are not able to disarm someone with this kind of weapon.\r\n");
+      return;
+  }
+ 
+  if (!GET_EQ(vict, WEAR_WIELD)) {
+    if (GET_EQ(vict, WEAR_HOLD) && 
+      (GET_OBJ_TYPE(GET_EQ(vict, WEAR_HOLD)) == ITEM_WEAPON)) {
+      eq_pos = WEAR_HOLD;
+    } else {
+      send_to_char(ch, "Your target does not appear to be using a weapon.\r\n");
+      return;
+    }
+  } else {
+    eq_pos = WEAR_WIELD;
+  }
+
+  percent = rand_number(1, 101) + GET_DEX(vict) - GET_DEX(ch);
+  if ((!MOB_FLAGGED(vict, MOB_AWARE)) || (!AWAKE(vict))) {
+     percent -= (GET_DEX(ch) / 2);
+  }
+  prob = GET_SKILL(ch, SKILL_DISARM);
+
+  if (percent >= prob) {
+    send_to_char(ch, "Be careful!  You almost lost your own weapon.\r\n");
+  } else {
+    obj = unequip_char(vict, eq_pos);
+    percent = rand_number(1, MAX(2, 10 + GET_DEX(vict) - GET_DEX(ch)));
+    if (percent != 1) {   
+      snprintf(tmpBuffer, SMALL_BUFSIZE, "You knock $p from $N's hands!");
+      act(tmpBuffer, FALSE, ch, obj, vict, TO_CHAR);
+      snprintf(tmpBuffer, SMALL_BUFSIZE, "$n knocks $p from your hands!");
+      act(tmpBuffer, FALSE, ch, obj, vict, TO_VICT);
+      snprintf(tmpBuffer, SMALL_BUFSIZE, "$n knocks $p from $N's hands!");
+      act(tmpBuffer, TRUE, ch, obj, vict, TO_NOTVICT);
+      obj_to_char(obj, vict);
+    } else {
+      snprintf(tmpBuffer, SMALL_BUFSIZE, "You send $p flying from $N's hands!");
+      act(tmpBuffer, FALSE, ch, obj, vict, TO_CHAR);
+      snprintf(tmpBuffer, SMALL_BUFSIZE, "$n sends $p flying from your hands!");
+      act(tmpBuffer, FALSE, ch, obj, vict, TO_VICT);
+      snprintf(tmpBuffer, SMALL_BUFSIZE, "$n sends $p flying from $N's hands!");
+      act(tmpBuffer, TRUE, ch, obj, vict, TO_NOTVICT);
+      obj_to_room(obj, vict->in_room);
+    } 
+  }
+
+  WAIT_STATE(ch, PULSE_VIOLENCE * 2);
+
+  if (!FIGHTING(ch)) {
+    set_fighting(ch, vict);
+  }
+
+  if (!FIGHTING(vict)) {
+    set_fighting(vict, ch);
+  }
+
+  return;
+}
