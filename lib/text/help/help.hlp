@@ -3314,13 +3314,14 @@ See also: WATERWALK, EARTHQUAKE
 #0
 FOLLOWERS
 
-Usage: follow <leader>
+Usage: follow <leader> | follow
 
-Use FOLLOW to automatically follow someone else.
+Use FOLLOW to automatically follow someone else or report who you are following.
 
 Examples:
   > follow Rumble
   > follow self (to stop following someone else)
+  > follow (to show who you are following)
 
 See also: GROUP, SNEAK
 #0
