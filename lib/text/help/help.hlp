@@ -4247,7 +4247,7 @@ rounds of 'Violence' -- so be sure that you do not need to flee!
 
 See also: BASH, RESCUE
 #0
-KILL HIT FIGHT ATTACK SLAY BATTLES SMITE STRIKE CHOP VIOLENCE
+KILL HIT FIGHT ATTACK BATTLES SMITE STRIKE CHOP VIOLENCE
 
 Usage: kill [target]
        hit [target]
@@ -8792,6 +8792,14 @@ skillset rumble 'magic missile' 100
 
 See also: SET, SKILLS, SPELLS
 #31
+SLAY
+
+Usage: slay <victim>
+
+   This command will instantly put the specified victim to death as long as 
+   the victim's level is less than the person attempting the command.
+
+#32
 SLEEP
 
 SLEEP is both a command and the name of a spell.
