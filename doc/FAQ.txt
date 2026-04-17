@@ -257,6 +257,9 @@ http://tbamud.com
 All donated areas have been added to the latest version of tbaMUD. If you
 wish to donate some of your own work stop by the Builder Academy.
 
+https://github.com/rds1983 has generated maps of all the existing areas, 
+and they can be found here: https://mudmapbuilder.github.io/
+
 2.3.  I have questions about tbaMUD.  Where should I go?
 
 Stop by The Builder Academy at tbamud.com 9091 or the website at:
@@ -697,8 +700,8 @@ trigger variables.
 4.15.  I want to expand the ability to pk in my MUD, allowing ASSASSINS
        that'll be able to PK without getting flagged.  How can I do this?
 
-With tbaMUD simply enter Cedit (configuration editor) and select Game Play 
-Options. Then enable Player Killing.
+With tbaMUD simply enter Cedit (configuration editor), select Game Play 
+ (G). Select Player Killing Allowed (A) and choose (3) 'Free for all!'.
 
 4.16.  Why does it say ``Connection closed by foreign host.'' and not
        display the ``Byebye!'' message I'm trying to send before cutting

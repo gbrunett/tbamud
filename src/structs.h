@@ -262,9 +262,10 @@
 #define PRF_AUTOMAP      31   /**< Show map at the side of room descs */
 #define PRF_AUTOKEY      32   /**< Automatically unlock locked doors when opening */
 #define PRF_AUTODOOR     33   /**< Use the next available door */
-#define PRF_ZONERESETS   34
+#define PRF_ZONERESETS   34   /**< Show when zones reset */
+#define PRF_VERBOSE      35   /**< Listings like where are more verbose */
 /** Total number of available PRF flags */
-#define NUM_PRF_FLAGS    35
+#define NUM_PRF_FLAGS    36
 
 /* Affect bits: used in char_data.char_specials.saved.affected_by */
 /* WARNING: In the world files, NEVER set the bits marked "R" ("Reserved") */
@@ -1276,7 +1277,7 @@ struct happyhour {
 struct recent_player
 {
    int    vnum;                   /* The ID number for this instance */
-   char   name[MAX_NAME_LENGTH];  /* The char name of the player     */
+   char   name[MAX_NAME_LENGTH+1];/* The char name of the player     */
    bool   new_player;             /* Is this a new player?           */
    bool   copyover_player;        /* Is this a player that was on during the last copyover? */
    time_t time;                   /* login time                      */
@@ -1290,8 +1291,8 @@ struct recent_player
  * variables. */
 struct game_data
 {
-  int pk_allowed; /**< Is player killing allowed?    */
-  int pt_allowed; /**< Is player thieving allowed?   */
+  int pk_setting; /**< Is player killing allowed?    */
+  int pt_setting; /**< Is player thieving allowed?   */
   int level_can_shout; /**< Level player must be to shout.   */
   int holler_move_cost; /**< Cost to holler in move points.    */
   int tunnel_size; /**< Number of people allowed in a tunnel.*/
