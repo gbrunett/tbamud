@@ -2252,10 +2252,10 @@ ACMD(do_wiznet)
   }
   if (level > LVL_IMMORT) {
     snprintf(buf1, sizeof(buf1), "\tc%s: <%d> %s%s\tn\r\n", GET_NAME(ch), level, emote ? "<--- " : "", argument);
-    snprintf(buf2, sizeof(buf1), "\tcSomeone: <%d> %s%s\tn\r\n", level, emote ? "<--- " : "", argument);
+    snprintf(buf2, sizeof(buf2), "\tcSomeone: <%d> %s%s\tn\r\n", level, emote ? "<--- " : "", argument);
 } else {
     snprintf(buf1, sizeof(buf1), "\tc%s: %s%s\tn\r\n", GET_NAME(ch), emote ? "<--- " : "", argument);
-    snprintf(buf2, sizeof(buf1), "\tcSomeone: %s%s\tn\r\n", emote ? "<--- " : "", argument);
+    snprintf(buf2, sizeof(buf2), "\tcSomeone: %s%s\tn\r\n", emote ? "<--- " : "", argument);
   }
 
   for (d = descriptor_list; d; d = d->next) {
@@ -2665,7 +2665,7 @@ ACMD(do_show)
   "  %5d triggers         %5d shops\r\n"
   "  %5d large bufs       %5d autoquests\r\n"
 	"  %5d buf switches     %5d overflows\r\n"
-	"  %5d lists\r\n",
+	"  %5zu lists\r\n",
 	i, con,
 	top_of_p_table + 1,
 	j, top_of_mobt + 1,

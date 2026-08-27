@@ -983,7 +983,8 @@ void extract_char_final(struct char_data *ch)
       extract_script_mem(SCRIPT_MEM(ch));
   } else {
     save_char(ch);
-    Crash_delete_crashfile(ch);
+    if (GET_PFILEPOS(ch) >= 0)
+      Crash_delete_crashfile(ch);
   }
 
   /* If there's a descriptor, they're in the menu now. */
@@ -1411,7 +1412,7 @@ int find_all_dots(char *arg)
   if (!strcmp(arg, "all"))
     return (FIND_ALL);
   else if (!strncmp(arg, "all.", 4)) {
-    strcpy(arg, arg + 4);	/* strcpy: OK (always less) */
+    memmove(arg, arg + 4, strlen(arg + 4) + 1);	/* memmove: the copy overlaps */
     return (FIND_ALLDOT);
   } else
     return (FIND_INDIV);

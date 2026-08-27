@@ -534,6 +534,7 @@ static void init_game(ush_int local_port)
   game_loop(mother_desc);
 
   Crash_save_all();
+  House_save_all();
 
   log("Closing all sockets.");
   while (descriptor_list)
@@ -1622,7 +1623,8 @@ static int process_output(struct descriptor_data *t)
 
   } else {
     /* Not all data in buffer sent.  result < output buffersize. */
-    strcpy(t->output, t->output + result);	/* strcpy: OK (overlap) */
+    memmove(t->output, t->output + result,
+	    strlen(t->output + result) + 1);	/* memmove: the copy overlaps */
     t->bufptr   -= result;
     t->bufspace += result;
   }
@@ -1912,7 +1914,7 @@ static int process_input(struct descriptor_data *t)
 
     *write_point = '\0';
 
-    if ((space_left <= 0) && (ptr < nl_pos)) {
+    if (ptr < nl_pos) {
       char buffer[MAX_INPUT_LENGTH + 64];
 
       snprintf(buffer, sizeof(buffer), "Line too long.  Truncated to:\r\n%s\r\n", tmp);
